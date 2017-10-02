@@ -1,0 +1,2 @@
+istioctl: "{{istio_basedir}}/bin/istioctl"
+samples: "{{istio_basedir}}/samples" 

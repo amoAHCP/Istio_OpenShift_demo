@@ -1,0 +1,12 @@
+---
+  - name: Deploy skydive
+    shell: "oc process -f {{skydive_template}} | oc create -f -"
+    tags:
+      - skydive
+
+  - name: Enable DeploymentConfig to run in privileged
+    shell: oc adm policy add-scc-to-user privileged system:serviceaccount:skydive:default
+
+  # https://github.com/skydive-project/skydive/tree/master/contrib/openshift
+  - name: Expose skydive-analyzer
+    shell: "oc delete route skydive-analyzer && oc expose svc skydive-analyzer"

@@ -27,6 +27,6 @@
     shell: "{{ add_scc_priv }} {{ cluster_user }} -z default -n {{ ns }}"
     ignore_errors: yes
 
-  - name: oc apply -f {{istio_basedir}}/install/kubernetes/istio.yaml
+  - name: Deploy Istio
     shell: "oc apply -f {{istio_basedir}}/install/kubernetes/istio.yaml"
   

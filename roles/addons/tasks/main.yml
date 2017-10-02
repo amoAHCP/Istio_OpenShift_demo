@@ -1,0 +1,24 @@
+---
+  - name: Deploy prometheus
+    shell: "oc apply -f {{addon_dir}}/prometheus.yaml"
+
+  - name: Deploy grafana
+    shell: "oc apply -f {{addon_dir}}/grafana.yaml"
+
+  - name: Deploy servicegraph
+    shell: "oc apply -f {{addon_dir}}/servicegraph.yaml"
+
+  - name: Deploy zipkin
+    shell: "oc apply -f {{addon_dir}}/zipkin.yaml"
+
+  - name: Expose grafana
+    shell: "oc expose svc grafana"
+
+  - name: Expose prometheus
+    shell: "oc expose svc prometheus"
+
+  - name: Expose servicegraph
+    shell: "oc expose svc servicegraph"
+
+  - name: Expose zipkin
+    shell: "oc expose svc zipkin"

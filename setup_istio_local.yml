@@ -2,13 +2,22 @@
   - hosts: localhost
     gather_facts: True
 
+    pre_tasks:
+      - name: Check if API is reachable       
+        shell: curl -k https://127.0.0.1:8443
+        register: curl
+        failed_when: curl.rc != 0
+        
     vars:
         istio_basedir: "{{playbook_dir}}/istio-0.2.4"
-        demo_app: False
-        monitoring: True
+        demo_app: True
+        addons: True
         skydive: True
           
     roles:
       - local_cluster_up
       - istio
-      - { role: monitoring, when: monitoring}
+      - { role: demo_app, when: demo_app}
+      - { role: addons, when: addons}
+      - { role: skydive, when: skydive}
+      
