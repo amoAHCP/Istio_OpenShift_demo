@@ -11,8 +11,6 @@ vars:
         skydive: True
 ```
 
-Installing with every var set to True can use ~4/5Gb RAM and can take up to around ~15 minutes to finish.
-
 ## Requirements
 Download OpenShift client tools equal or greater than version 3.7 from https://github.com/openshift/origin/releases and place it under `/usr/bin`.
 
@@ -35,7 +33,9 @@ If you run into issues make sure you have a [working docker environment](https:/
 $ ansible-playbook setup_istio_local.yml
 ```
 
-You might see something like the below even after the playbook is finished. This is because besides the [init-containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers) Envoy is deployed as a side car container called `istio-proxy` for each service component.
+
+## After deploying
+You might see something like the below even some time after the playbook is finished. This is because besides the [init-containers](https://kubernetes.io/docs/concepts/workloads/pods/init-containers), Envoy is deployed as a side car container called `istio-proxy` for each service component.
 
 ```
 $ oc get pods                            
@@ -59,12 +59,3 @@ skydive-analyzer-1-deploy        0/1       ContainerCreating   0          3m
 zipkin-3660596538-1gckb          1/1       Running             0          3m
 
 ```
-
-Example:
-
-$ oc logs productpage-v1-849198989-3jxcj -c istio-proxy 
-Error from server (BadRequest): container "istio-proxy" in pod "productpage-v1-849198989-3jxcj" is waiting to start: PodInitializing
-
-$ oc logs productpage-v1-849198989-3jxcj 
-Error from server (BadRequest): a container name must be specified for pod productpage-v1-849198989-3jxcj, choose one of: [productpage istio-proxy] or one of the init containers: [istio-init enable-core-dump]
-
