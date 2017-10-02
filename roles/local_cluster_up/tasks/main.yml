@@ -1,0 +1,74 @@
+---
+  - set_fact:
+      oc_tools_dir: /tmp
+
+  - set_fact:
+      oc_cmd: "{{ oc_tools_dir }}/oc"
+
+  - set_fact:
+      oadm_cmd: "{{ oc_tools_dir }}/oc adm"
+
+  - set_fact:
+      add_scc_anyuid: "{{ oc_tools_dir }}/oc adm policy add-scc-to-user anyuid "
+  
+  - set_fact:
+      add_scc_priv: "{{ oc_tools_dir }}/oc adm policy add-scc-to-user privileged"
+
+  - set_fact:
+      add_cluster_admin: "{{ oc_tools_dir }}/oc adm policy add-cluster-role-to-user cluster-admin"
+
+  - file:
+      path: "{{ oc_tools_dir }}"
+      state: directory
+  
+
+  - name: Check if /usr/bin/oc exists
+    stat: 
+      path: /usr/bin/oc
+    register: stat_result
+
+  - name: Install oc
+    copy:
+      src: /usr/bin/oc
+      dest: "{{ oc_tools_dir }}/oc"
+      mode: 0755
+    when: stat_result.stat.exists == True
+
+  - name: Checking version of oc client
+    shell: "{{ oc_cmd }} version"
+    register: oc_version_output
+    ignore_errors: yes
+
+  - debug: var=oc_version_output.stdout_lines
+
+  - name: Login as {{ cluster_system_admin }}
+    shell: "{{ oc_cmd }} login -u {{ cluster_system_admin }}"
+    ignore_errors: yes
+
+  - name: Create user {{ cluster_user }}
+    shell: "{{ oc_cmd }} create user {{ cluster_user }}"
+    ignore_errors: yes
+
+  - name: Add cluster-admin role to {{ cluster_user }}
+    shell: "{{ add_cluster_admin }} {{ cluster_user }}"
+    ignore_errors: yes
+
+  - name: Add privileged scc to {{ cluster_user }}
+    shell: "{{ add_scc_priv }} {{ cluster_user }}"
+    ignore_errors: yes
+
+  - name: Add anyuid scc to system:authenticated
+    shell: "{{ add_scc_anyuid }} system:authenticated"
+    ignore_errors: yes
+
+  - name: oc cluster status
+    shell: "{{ oc_cmd }} cluster status"
+    register: cluster_status
+
+  - name: oc whoami
+    shell: "{{ oc_cmd }} whoami"
+    register: whoami
+
+  - debug: var=cluster_status.stdout_lines
+  - debug: var=whoami.stdout_lines
+  

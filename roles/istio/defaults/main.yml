@@ -1,0 +1,2 @@
+istio_latest: https://git.io/getLatestIstio
+ns: istio-system

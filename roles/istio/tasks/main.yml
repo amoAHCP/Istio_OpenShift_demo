@@ -1,0 +1,32 @@
+---
+  - name: oc new-project {{ns}}
+    shell: "{{ oc_cmd }} new-project {{ns}}"
+    ignore_errors: yes
+
+  - name: oc project {{ns}}
+    shell: "{{ oc_cmd }} project {{ns}}"
+    ignore_errors: yes
+
+  - name: Add anyuid scc to default
+    shell: "{{ add_scc_anyuid }} -z default -n {{ ns }}"
+    ignore_errors: yes
+  
+  - name: Add anyuid scc to istio-egress-service-account
+    shell: "{{ add_scc_anyuid }} -z istio-egress-service-account -n {{ ns }}"
+    ignore_errors: yes
+
+  - name: Add anyuid scc to istio-ingress-service-account
+    shell: "{{ add_scc_anyuid }} -z istio-ingress-service-account -n {{ ns }}"
+    ignore_errors: yes
+
+  - name: Add cluster-admin role to {{ cluster_user }}
+    shell: "{{ add_cluster_admin }} {{ cluster_user }} -z default"
+    ignore_errors: yes
+
+  - name: Add privileged scc to istio services
+    shell: "{{ add_scc_priv }} {{ cluster_user }} -z default -n {{ ns }}"
+    ignore_errors: yes
+
+  - name: oc apply -f {{istio_basedir}}/install/kubernetes/istio.yaml
+    shell: "oc apply -f {{istio_basedir}}/install/kubernetes/istio.yaml"
+  

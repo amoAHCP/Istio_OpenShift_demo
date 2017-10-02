@@ -1,0 +1,14 @@
+---
+  - hosts: localhost
+    gather_facts: True
+
+    vars:
+        istio_basedir: "{{playbook_dir}}/istio-0.2.4"
+        demo_app: False
+        monitoring: True
+        skydive: True
+          
+    roles:
+      - local_cluster_up
+      - istio
+      - { role: monitoring, when: monitoring}

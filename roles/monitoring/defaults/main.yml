@@ -1,0 +1,1 @@
+addon_dir: "{{istio_basedir}}/install/kubernetes/addons"
