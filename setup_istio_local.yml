@@ -10,7 +10,7 @@
         
     vars:
         istio_basedir: "{{playbook_dir}}/istio-0.2.4"
-        demo_app: True
+        demo_app: False
         addons: True
         skydive: True
           
