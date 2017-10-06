@@ -9,10 +9,10 @@
         failed_when: curl.rc != 0
         
     vars:
-        istio_basedir: "{{playbook_dir}}/istio-0.2.4"
-        demo_app: False
-        addons: True
-        skydive: True
+        istio_basedir: "{{playbook_dir}}/istio-{{istio_version}}"
+        demo_app: True
+        addons: False
+        skydive: False
           
     roles:
       - local_cluster_up

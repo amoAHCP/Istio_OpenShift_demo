@@ -1,4 +1,4 @@
----
+---  
   - name: oc new-project {{ns}}
     shell: "{{ oc_cmd }} new-project {{ns}}"
     ignore_errors: yes
@@ -27,6 +27,9 @@
     shell: "{{ add_scc_priv }} {{ cluster_user }} -z default -n {{ ns }}"
     ignore_errors: yes
 
-  - name: Deploy Istio
+  - name: curl -L {{istio_latest_url}} | ISTIO_VERSION={{istio_version}} sh -
+    shell: curl -L {{istio_latest_url}} | ISTIO_VERSION={{istio_version}} sh -
+
+  - name: Deploy Istio-{{istio_version}}
     shell: "oc apply -f {{istio_basedir}}/install/kubernetes/istio.yaml"
   

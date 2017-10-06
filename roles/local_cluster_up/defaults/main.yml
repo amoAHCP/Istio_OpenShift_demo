@@ -1,4 +1,3 @@
-istio_latest: https://git.io/getLatestIstio
 cluster_user: dev
 cluster_user_password: dev
 cluster_system_admin: "system:admin"

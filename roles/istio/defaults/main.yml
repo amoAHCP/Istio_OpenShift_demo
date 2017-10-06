@@ -1,2 +1,3 @@
-istio_latest: https://git.io/getLatestIstio
+istio_latest_url: https://git.io/getLatestIstio
+istio_version: "0.2.7"
 ns: istio-system
