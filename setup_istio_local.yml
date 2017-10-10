@@ -10,14 +10,16 @@
         
     vars:
         istio_basedir: "{{playbook_dir}}/istio-{{istio_version}}"
-        demo_app: True
+        bookinfo_demo: False
+        hola_demo: True
         addons: False
-        skydive: False
+        skydive: True
           
     roles:
       - local_cluster_up
       - istio
-      - { role: demo_app, when: demo_app}
+      - { role: bookinfo_demo, when: bookinfo_demo}
+      - { role: hola_demo, when: hola_demo}
       - { role: addons, when: addons}
       - { role: skydive, when: skydive}
       

@@ -1,0 +1,36 @@
+---      
+  - name: Ensure {{hola_dir}} directory exists
+    file:
+      path: "{{hola_dir}}"
+      state: directory
+      mode: 0755
+    
+  - git:
+      repo: "{{hola_repo}}"
+      dest: "{{hola_dir}}"
+    
+  - name: oc new-build --binary --name=hola -l app=hola
+    shell: "oc new-build --binary --name=hola -l app=hola"
+    args:
+      chdir: "{{hola_dir}}"
+    ignore_errors: yes
+
+  - name : mvn package
+    shell: "mvn package"
+    args:
+      chdir: "{{hola_dir}}"
+
+  - name: oc start-build hola --from-dir=. --follow
+    shell: "oc start-build hola --from-dir={{hola_dir}} --follow"
+    args:
+      chdir: "{{hola_dir}}"
+    ignore_errors: yes
+  
+  - name: oc new-app hola -l app=hola,hystrix.enabled=true
+    shell: "oc new-app hola -l app=hola,hystrix.enabled=true"
+    args:
+      chdir: "{{hola_dir}}"
+    ignore_errors: yes
+      
+  - name: Expose hola
+    shell: "oc expose service hola"

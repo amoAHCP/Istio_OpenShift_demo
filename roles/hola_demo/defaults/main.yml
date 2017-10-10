@@ -1,0 +1,2 @@
+hola_repo: "https://github.com/redhat-helloworld-msa/hola"
+hola_dir: "{{playbook_dir}}/hola"

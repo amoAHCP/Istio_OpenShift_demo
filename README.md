@@ -1,19 +1,21 @@
 # Istio on OpenShift / Kubernetes - local demo environment.
 
-It uses istio-0.2.7 by default but this can be altered.
-
 
 ## Description
 This set of playbooks installs Istio on top of an existing openshift cluster. Besides the main Istio components, certain monitoring or tracing addons such as prometheus, grafana, zipkin or skydive can be installed as well by adjusting the following booleans defined in `setup_istio_local.yml`.
 
 ```
 vars:
-        demo_app: True
+        bookinfo_demo: True
+        hola_demo: True
         addons: False
         skydive: False
 ```
 
 ## Requirements
+
+Packages `git` and `maven` (for java based demo)
+
 Download OpenShift client tools equal or greater than version 3.7 from https://github.com/openshift/origin/releases and place it under `/usr/bin`.
 
 ```
