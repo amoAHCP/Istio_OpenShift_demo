@@ -11,9 +11,9 @@
     vars:
         istio_basedir: "{{playbook_dir}}/istio-{{istio_version}}"
         bookinfo_demo: False
-        hola_demo: True
-        addons: False
-        skydive: True
+        hola_demo: False
+        addons: True
+        skydive: False
           
     roles:
       - local_cluster_up
