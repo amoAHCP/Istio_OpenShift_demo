@@ -16,7 +16,7 @@ vars:
 
 Packages `git` and `maven` (for java based demo)
 
-Download OpenShift client tools equal or greater than version 3.7 from https://github.com/openshift/origin/releases and place it in your `$PATH`
+Download OpenShift client tools equal or greater than version 3.7 from https://github.com/openshift/origin/releases and place it under `/usr/bin`.
 
 ```
 $ which oc
@@ -28,7 +28,7 @@ kubernetes v1.7.0+695f48a16f
 features: Basic-Auth GSSAPI Kerberos SPNEGO
 ```
 
-Run `oc cluster up --skip-registry-check=true`
+Run `oc cluster up`.
 
 If you run into issues make sure you have a [working docker environment](https://github.com/openshift/origin/blob/master/docs/cluster_up_down.md#linux)
 
@@ -42,4 +42,7 @@ Most common issues should be solved by
 ## Installing
 ```
 $ ansible-playbook setup_istio_local.yml
+
+# Test version 0.2.4
+$ ansible-playbook setup_istio_local.yml --extra-vars "istio_version=0.2.4"
 ```
